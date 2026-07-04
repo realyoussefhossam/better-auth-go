@@ -5,8 +5,6 @@
 - [x] install components `npx shadcn@latest add button label input sonner`
 - [x] show button and test `dev` server
 
-== PART 1 ==
-
 - [x] install Better Auth `npm install better-auth`
 - [x] create `.env` and set Environment Variables
 - [x] create `lib/auth.ts`
@@ -30,4 +28,7 @@
 - [x] push database changes `npx prisma db push` (Neon `neondb` in sync)
 - [x] create Mount Handler in `app/api/auth/[...all]/route.ts` (uses `toNextJsHandler(auth)` from `better-auth/next-js` — verified compatible with Next.js 16 route handler convention)
 - [x] adjust `eslint.config.mjs` to ignore generated client (corrected path to `lib/generated/**` — checklist's `/src/generated/**/*` didn't match this project's layout)
-- [x] create Client instance in `lib/auth-client.ts` (`createAuthClient` from `better-auth/react`, `baseURL: process.env.NEXT_PUBLIC_API_URL`)
+- [x] create Client instance in `lib/auth-client.ts` (`createAuthClient` from `better-auth/react`, `baseURL: process.env.NEXT_PUBLIC_API_URL`, `jwtClient()` plugin)
+- [x] enable JWT plugin + email/password in `lib/auth.ts` (`jwt()` server plugin, `emailAndPassword: { enabled: true }`)
+- [x] add server-side Go API proxy at `app/api/[...path]/route.ts` (forwards to `GO_API_URL`, injects JWT via `auth.api.getToken`, streams body)
+- [x] add `GO_API_URL` to `.env` (server-only, used by proxy route; defaults to `http://localhost:8080` matching Go API port)

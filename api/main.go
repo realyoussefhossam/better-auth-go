@@ -65,7 +65,7 @@ func main() {
 	router := http.NewServeMux()
 
 	router.HandleFunc("/health", healthHandler)
-	router.Handle("/api/auth/verify", http.HandlerFunc(verifyAuthHandler))
+	router.Handle("/api/verify", http.HandlerFunc(verifyAuthHandler))
 	router.Handle("/api/me", http.HandlerFunc(verifyAuthHandler))
 
 	// Enable CORS
