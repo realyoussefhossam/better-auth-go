@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 
 	"github.com/realyoussefhossam/better-auth-go/api/auth"
@@ -60,6 +61,8 @@ func verifyAuthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	_ = godotenv.Load()
+
 	logger = slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
 	router := http.NewServeMux()
@@ -71,11 +74,14 @@ func main() {
 	// Enable CORS
 	handler := cors.AllowAll().Handler(middleware.Logging(logger, router))
 
-	port := ":8080"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
 	fmt.Println("Server starting on port", port)
 
-	if err := http.ListenAndServe(port, handler); err != nil {
+	if err := http.ListenAndServe(":"+port, handler); err != nil {
 		log.Fatal("Server failed to start:", err)
 	}
 }
